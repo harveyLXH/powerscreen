@@ -66,8 +66,6 @@ let dataAnalysis = ref(dataAnalysisData)
 let chargingTop4 = ref(chargingTop4Data)
 let percentage = ref(0)
 
-console.log(import.meta.env.MODE)
-
 if (import.meta.env.MODE === 'development') {
   // 发起网络请求获取首页数据
   getPowerScreenData().then(res => {
@@ -83,14 +81,16 @@ if (import.meta.env.MODE === 'development') {
   })
 } else {
   // 生产环境使用测试数据
-  chargingPile.value = mockData.chargingPile.data
-  precessMonitoring.value = mockData.processMonitoring.data
-  chargingStatistics.value = mockData.chargingStatistics.data
-  exceptionMonitoring.value = mockData.exceptionMonitoring.data
-  dataAnalysis.value = mockData.dataAnalysis.data
+  setTimeout(() => {
+    chargingPile.value = mockData.chargingPile.data
+    precessMonitoring.value = mockData.processMonitoring.data
+    chargingStatistics.value = mockData.chargingStatistics.data
+    exceptionMonitoring.value = mockData.exceptionMonitoring.data
+    dataAnalysis.value = mockData.dataAnalysis.data
 
-  chargingTop4.value = mockData.chargingTop4.data
-  percentage.value = mockData.chargingTop4.totalPercentage
+    chargingTop4.value = mockData.chargingTop4.data
+    percentage.value = mockData.chargingTop4.totalPercentage
+  }, 100)
 }
 </script>
 
