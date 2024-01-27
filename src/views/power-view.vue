@@ -40,6 +40,8 @@ import {
   chargingTop4Data,
 } from '@/views/config/home-data'
 
+import mockData from '@/views/config/mock-data'
+
 import PieCharts from '@/components/pie-echarts.vue'
 import LineCharts from '@/components/line-echarts.vue'
 
@@ -64,18 +66,32 @@ let dataAnalysis = ref(dataAnalysisData)
 let chargingTop4 = ref(chargingTop4Data)
 let percentage = ref(0)
 
-// 发起网络请求获取首页数据
-getPowerScreenData().then(res => {
-  // console.log(res.data)
-  chargingPile.value = res.data.chargingPile.data
-  precessMonitoring.value = res.data.processMonitoring.data
-  chargingStatistics.value = res.data.chargingStatistics.data
-  exceptionMonitoring.value = res.data.exceptionMonitoring.data
-  dataAnalysis.value = res.data.dataAnalysis.data
+console.log(import.meta.env.MODE)
 
-  chargingTop4.value = res.data.chargingTop4.data
-  percentage.value = res.data.chargingTop4.totalPercentage
-})
+if (import.meta.env.MODE === 'development') {
+  // 发起网络请求获取首页数据
+  getPowerScreenData().then(res => {
+    // console.log(res.data)
+    chargingPile.value = res.data.chargingPile.data
+    precessMonitoring.value = res.data.processMonitoring.data
+    chargingStatistics.value = res.data.chargingStatistics.data
+    exceptionMonitoring.value = res.data.exceptionMonitoring.data
+    dataAnalysis.value = res.data.dataAnalysis.data
+
+    chargingTop4.value = res.data.chargingTop4.data
+    percentage.value = res.data.chargingTop4.totalPercentage
+  })
+} else {
+  // 生产环境使用测试数据
+  chargingPile.value = mockData.chargingPile.data
+  precessMonitoring.value = mockData.processMonitoring.data
+  chargingStatistics.value = mockData.chargingStatistics.data
+  exceptionMonitoring.value = mockData.exceptionMonitoring.data
+  dataAnalysis.value = mockData.dataAnalysis.data
+
+  chargingTop4.value = mockData.chargingTop4.data
+  percentage.value = mockData.chargingTop4.totalPercentage
+}
 </script>
 
 <style scoped>
